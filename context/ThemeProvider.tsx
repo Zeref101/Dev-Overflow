@@ -5,6 +5,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 interface ThemeContextType {
     mode: string,
     // a function which accepts the mode as string and returns void
+    // cause localstorage doesnt know what is the current active theme
     setMode: (mode: string) => void;
 }
 
@@ -14,12 +15,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const [mode, setMode] = useState('');
 
     const handleThemeChange = () => {
-        if (mode === 'dark') {
-            setMode('light');
-            document.documentElement.classList.add('light');
-        } else {
+        // (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) checks if the user's system is in dark mode or not
+        if (localStorage.theme === 'dark' || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+
+            // Commentd out the setMode because useEffect was triggering handleThemeChange which repeatedly changed light->dark and dark->light mode causing an infinte loop 
+
             setMode('dark');
             document.documentElement.classList.add('dark');
+        } else {
+            setMode('light');
+            document.documentElement.classList.remove('dark');
         }
     };
     useEffect(() => {
