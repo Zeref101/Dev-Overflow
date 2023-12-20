@@ -47,7 +47,7 @@ const RightSidebar = () => {
                 </div>
             </div>
             <div>
-                <h3 className='h3-bold text-dark200_light900 mt-7'>
+                <h3 className='h3-bold text-dark200_light900 mt-28'>
                     Popular Tags
                 </h3>
                 <div className='mt-7 flex flex-col gap-4'>
@@ -55,7 +55,7 @@ const RightSidebar = () => {
                         return (
                             <RenderTag
                                 key={tag._id}
-                                id={tag._id}
+                                _id={tag._id}
                                 name={tag.name}
                                 totalQuestions={tag.totalQuestions}
                                 showCount
