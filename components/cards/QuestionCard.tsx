@@ -62,6 +62,7 @@ const QuestionCard = ({
             <div className='mt-6 flex w-full flex-wrap justify-between gap-3'>
 
                 {/* can create a home metric variable to avoid duplicating like below */}
+
                 <Metric
                     imgUrl='/assets/icons/avatar.svg'
                     alt='User'
@@ -72,30 +73,34 @@ const QuestionCard = ({
                     textStyles="body-medium text-dark400_light700"
 
                 />
-                <Metric
-                    imgUrl='/assets/icons/like.svg'
-                    alt='Upvotes'
-                    value={formatAndDivideNumber(upvotes)}
-                    title='Votes'
-                    textStyles='small-medium text-dark400_light800'
+                <div className='flex justify-center gap-8'>
+                    <Metric
+                        imgUrl='/assets/icons/like.svg'
+                        alt='Upvotes'
+                        value={formatAndDivideNumber(upvotes)}
+                        title='Votes'
+                        textStyles='small-medium text-dark400_light800'
 
-                />
-                <Metric
-                    imgUrl='/assets/icons/message.svg'
-                    alt='Message'
-                    value={formatAndDivideNumber(answers.length)}
-                    title='Answers'
-                    textStyles='small-medium text-dark400_light800'
+                    />
+                    <Metric
+                        imgUrl='/assets/icons/message.svg'
+                        alt='Message'
+                        value={formatAndDivideNumber(answers.length)}
+                        title='Answers'
+                        textStyles='small-medium text-dark400_light800'
 
-                />
-                <Metric
-                    imgUrl='/assets/icons/eye.svg'
-                    alt='eye'
-                    value={formatAndDivideNumber(views)}
-                    title='Views'
-                    textStyles='small-medium text-dark400_light800'
+                    />
+                    <Metric
+                        imgUrl='/assets/icons/eye.svg'
+                        alt='eye'
+                        value={formatAndDivideNumber(views)}
+                        title='Views'
+                        textStyles='small-medium text-dark400_light800'
 
-                />
+                    />
+
+                </div>
+
             </div>
         </div>
     )
