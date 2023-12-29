@@ -1,5 +1,7 @@
 # DevFlow
 
+<img src="public/initial-proj-image.png">
+
 ## Overview
 
 This project is a developer-focused question-and-answer platform inspired by Stack Overflow, but with several innovative features designed to enhance the user experience and provide even more valuable resources for developers.
@@ -24,6 +26,7 @@ This project is a developer-focused question-and-answer platform inspired by Sta
         Next.js, React.js, TypeScript, Tailwind, Shadcn
     Back-end:
         Next.js, TypeScript, MongoDB
+
 ## Getting Started
 
 First, run the development server:
