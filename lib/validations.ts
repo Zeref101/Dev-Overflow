@@ -7,15 +7,15 @@ export const QuestionSchema = z.object({
     .max(130, {
       message: "Limit your title to a maximum of 130 characters.",
     }),
-  explanation: z.string().min(100, {
+  explanation: z.string().min(10, {
     message:
       "Please provide a detailed explanation with a minimum of 100 characters.",
   }),
   tags: z
     .array(
-      z.string().min(1).max(5, {
+      z.string().min(1).max(15, {
         message: "Each tag should have between 1 and 5 characters.",
-      }),
+      })
     )
     .min(1, {
       message: "Include at least one tag.",
