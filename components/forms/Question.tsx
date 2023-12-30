@@ -244,7 +244,7 @@ export function Question({ mongoUserId }: Props) {
             {isSubmitting ? (
               <>{type === "edit" ? "Editing..." : "Posting..."}</>
             ) : (
-              <>{type === "edit" ? "Edit a Question" : "Ask a Quesiton"}</>
+              <>{type === "edit" ? "Edit a Question" : "Ask a Question"}</>
             )}
           </Button>
         </div>
