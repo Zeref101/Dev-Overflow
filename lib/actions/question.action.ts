@@ -3,8 +3,29 @@
 import Question from "@/database/question.model";
 import { connectionToDatabase } from "../mongoose";
 import Tag from "@/database/tag.model";
+import { CreateQuestionParams, GetQuestionsParams } from "./shared.types";
+import User from "@/database/user.model";
+import { revalidatePath } from "next/cache";
 
-export async function createQuestion(params: any) {
+// GET THE QUESTIONS FROM DB
+
+export async function getQuestions(params: GetQuestionsParams) {
+  try {
+    connectionToDatabase();
+
+    const questions = await Question.find({})
+      .populate({ path: "tag", model: Tag })
+      .populate({ path: "author", model: User })
+      .sort({ createdAt: -1 });
+
+    return questions;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function createQuestion(params: CreateQuestionParams) {
   try {
     connectionToDatabase();
 
@@ -30,14 +51,12 @@ export async function createQuestion(params: any) {
       tagDocuments.push(existingTag._id);
     }
 
-    // So, in plain language, this regex does the following:
-    // It searches for documents where the name field:
-    // Starts with the value of the tag variable.
-    // Ends with the value of the tag variable (meaning it matches the entire tag).
-    // Successfully matches regardless of case (e.g., "javascript" would match "JavaScript").
+    await Question.findByIdAndUpdate(question._id, {
+      $push: { tag: { $each: tagDocuments } },
+    });
 
-    // CREATE AN INTERACTION RECORD FOR THE USER'S ASK QUESTION ACTION
-
-    // INCREMENT THE AUTHOR'S REPUTATION BY +5 FOR ASKING A QUESTION
+    revalidatePath(path);
+    // revalidate because after asking the question it wont recall the fetch function we need to reload the site
+    // revalidate allows you to specify a time interval (in seconds) after which a page or data should be revalidated (refetched from the server) to check for updates.
   } catch (error) {}
 }
