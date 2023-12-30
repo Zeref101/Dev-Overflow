@@ -5,87 +5,18 @@ import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filter";
+import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 
-const questions = [
-  {
-    _id: "1",
-    title: "Cascading deletes in sqlAlchemy",
-    tags: [
-      {
-        _id: "1",
-        name: "python",
-      },
-      {
-        _id: "2",
-        name: "sql",
-      },
-    ],
-    author: {
-      _id: "3",
-      name: "Shreyas",
-      picture: "url_to_picture",
-    },
-    upvotes: 10,
-    views: 1742,
-    answers: [],
-    createdAt: new Date("2023-12-19T14:35:00Z"),
-  },
-  {
-    _id: "2",
-    title: "Working with async/await in JavaScript",
-    tags: [
-      {
-        _id: "3",
-        name: "javascript",
-      },
-      {
-        _id: "4",
-        name: "async/await",
-      },
-    ],
-    author: {
-      _id: "5",
-      name: "John Doe",
-      picture: "url_to_picture",
-    },
-    upvotes: 20,
-    views: 782,
-    answers: [],
-    createdAt: new Date("2022-03-20T10:45:00Z"),
-  },
-  {
-    _id: "3",
-    title: "Introduction to React Hooks",
-    tags: [
-      {
-        _id: "6",
-        name: "react",
-      },
-      {
-        _id: "7",
-        name: "react-hooks",
-      },
-    ],
-    author: {
-      _id: "8",
-      name: "Jane Smith",
-      picture: "url_to_picture",
-    },
-    upvotes: 15,
-    views: 120,
-    answers: [],
-    createdAt: new Date("2022-05-10T08:20:00Z"),
-  },
-  // Add more questions as needed
-];
+export default async function Home() {
 
-export default function Home() {
+  const result = await getQuestions({});
+
   return (
     <>
       <div className="flex w-full justify-between max-sm:flex-col-reverse sm:items-center">
         <h1 className="h1-bold text-dark100_light900">All Questions</h1>
-        <Link href="/ask-questions" className="flex justify-end max-sm:w-full">
+        <Link href="/ask-question" className="flex justify-end max-sm:w-full">
           <Button className="primary-gradient min-h-[46px] px-4 py-3 text-light-900">
             Ask a Question
           </Button>
@@ -107,15 +38,15 @@ export default function Home() {
       </div>
       <HomeFilters />
       <div className="mt-10 flex flex-col gap-6 ">
-        {questions.length > 0 ? (
-          questions.map((question) => {
+        {result.length > 0 ? (
+          result.map((question) => {
             return (
               <div key={question._id}>
                 <QuestionCard
                   key={question._id}
                   _id={question._id}
                   title={question.title}
-                  tags={question.tags}
+                  tags={question.tag}
                   author={question.author}
                   upvotes={question.upvotes}
                   views={question.views}
