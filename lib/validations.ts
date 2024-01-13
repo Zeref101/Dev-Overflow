@@ -15,7 +15,7 @@ export const QuestionSchema = z.object({
     .array(
       z.string().min(1).max(15, {
         message: "Each tag should have between 1 and 5 characters.",
-      })
+      }),
     )
     .min(1, {
       message: "Include at least one tag.",
