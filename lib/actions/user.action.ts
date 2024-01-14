@@ -29,7 +29,8 @@ export async function createUser(userData: CreateUserParams) {
 
     return newUser;
   } catch (error) {
-    throw new Error();
+    console.log(error);
+    throw error;
   }
 }
 
@@ -44,7 +45,10 @@ export async function updateUser(params: UpdateUserParams) {
     });
 
     revalidatePath(path);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
 
 export async function deleteUser(params: DeleteUserParams) {
@@ -59,25 +63,22 @@ export async function deleteUser(params: DeleteUserParams) {
       throw new Error("User not found");
     }
 
-    // DELETE EVERYTHING THAT THE USER HAS EVER DONE questions, answers, etc
+    // Delete user from database
+    // and questions, answers, comments, etc.
 
-    //  get questions of that particular user
+    // get user question ids
+    // const userQuestionIds = await Question.find({ author: user._id}).distinct('_id');
 
-    // const userQuestionIds = await Question.find({ author: user._id }).distinct(
-    //   "_id",
-    // );
-
-    //  delete user questions
-
+    // delete user questions
     await Question.deleteMany({ author: user._id });
 
-    // TODO: DELETE USER ANSWERS, COMMENTS, ETC
+    // TODO: delete user answers, comments, etc.
 
-    // double-checks for any remaining user data
     const deletedUser = await User.findByIdAndDelete(user._id);
 
     return deletedUser;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
