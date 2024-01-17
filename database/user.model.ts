@@ -20,7 +20,7 @@ const UserSchema = new Schema({
   name: { type: String, required: true },
   username: { type: String, required: true, unique: true }, // Ensure unique usernames
   email: { type: String, required: true, unique: true }, // Ensure unique emails
-  password: { type: String, required: true }, // Consider secure hashing
+  password: { type: String }, // Consider secure hashing
   bio: { type: String },
   picture: { type: String, required: true },
   location: { type: String },
