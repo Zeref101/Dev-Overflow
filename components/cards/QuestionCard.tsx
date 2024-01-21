@@ -56,7 +56,7 @@ const QuestionCard = ({
         {/* can create a home metric variable to avoid duplicating like below */}
 
         <Metric
-          imgUrl="/assets/icons/avatar.svg"
+          imgUrl={author.picture}
           alt="User"
           value={author.name}
           title={` - asked ${getTimestamp(createdAt)}`}
