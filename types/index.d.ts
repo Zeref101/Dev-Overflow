@@ -47,3 +47,18 @@ export interface BadgeCounts {
 }
 
 export type BadgeCriteriaType = keyof typeof BADGE_CRITERIA;
+
+export interface resultProp {
+  clerkId: string;
+  name: string;
+  username: string;
+  email: string;
+  password?: string;
+  bio?: string;
+  picture: string;
+  location?: string;
+  portfolioWebsite?: string;
+  reputation?: number;
+  saved: string[];
+  joinedAt: Date;
+}

@@ -39,14 +39,14 @@ export async function createQuestion(params: CreateQuestionParams) {
       author,
     });
 
-    // CREATE TAGS OR GET THEM IF THEY EXISTS
+    //* CREATE TAGS OR GET THEM IF THEY EXISTS
     const tagDocuments = [];
 
     for (const tag of tags) {
       const existingTag = await Tag.findOneAndUpdate(
         { name: { $regex: new RegExp(`^${tag}$`, "i") } }, // This regex is used to find a tag that matches the tag variable.
         { $setOnInsert: { name: tag }, $push: { Questions: question._id } }, // If a matching tag is found, it appends the question._id to its question array, associating the question with the tag.
-        { upsert: true, new: true }, // If no matching tag is found, it creates a new tag with the name and question fields.
+        { upsert: true, new: true } // If no matching tag is found, it creates a new tag with the name and question fields.
       );
       tagDocuments.push(existingTag._id);
     }
