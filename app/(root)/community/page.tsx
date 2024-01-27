@@ -1,16 +1,18 @@
+import UserCard from "@/components/cards/UserCard";
 import Filter from "@/components/shared/Filter";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 
 import { UserFilters } from "@/constants/filter";
 import { getAllUsers } from "@/lib/actions/user.action";
-import { resultProp } from "@/types";
+// import { resultProp } from "@/types";
+import Link from "next/link";
 import React from "react";
 
 
 
 
 const Page = async () => {
-    const result: resultProp[] = await getAllUsers({});
+    const result = await getAllUsers({});
 
     return (
         <>
@@ -34,14 +36,19 @@ const Page = async () => {
                 {result.length > 0 ? (
                     result.map((user) => {
                         return (
-                            <div key={user.name}>
-                                {user.name}
-                            </div>
+                            <UserCard
+                                key={user.name}
+                                user={user}
+                            />
+
                         )
                     })
                 ) : (
-                    <div>
+                    <div className=" paragraph-regular text-dark200_light800 mx-auto flex max-w-4xl flex-col text-center">
                         No Users Found
+                        <Link href={`/sign-up`} className="mt-2 font-bold text-accent-blue ">
+                            Join to be the first one
+                        </Link>
                     </div>
                 )}
             </section>
