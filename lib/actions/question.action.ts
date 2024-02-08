@@ -3,7 +3,11 @@
 import Question from "@/database/question.model";
 import { connectionToDatabase } from "../mongoose";
 import Tag from "@/database/tag.model";
-import { CreateQuestionParams, GetQuestionsParams } from "./shared.types";
+import {
+  CreateQuestionParams,
+  GetQuestionByIdParams,
+  GetQuestionsParams,
+} from "./shared.types";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
 
@@ -59,4 +63,23 @@ export async function createQuestion(params: CreateQuestionParams) {
     // revalidate because after asking the question it wont recall the fetch function we need to reload the site
     // revalidate allows you to specify a time interval (in seconds) after which a page or data should be revalidated (refetched from the server) to check for updates.
   } catch (error) {}
+}
+
+export async function getQuestionById(params: GetQuestionByIdParams) {
+  try {
+    connectionToDatabase();
+    const { questionId } = params;
+    const question = await Question.findById(questionId)
+      .populate({ path: "tag", model: Tag, select: "_id name" })
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id clerkId picture name",
+      });
+
+    return { question };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
