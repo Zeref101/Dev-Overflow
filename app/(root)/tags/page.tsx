@@ -30,7 +30,6 @@ const Page = async () => {
             <section className="mt-12 flex flex-wrap gap-4">
                 {result.tags.length > 0 ? (
                     result.tags.map((tag) => {
-                        console.log(tag);
                         return (
                             <Link
                                 href={`/tags/${tag._id}`}
