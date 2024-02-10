@@ -1,5 +1,8 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
+
+import '../styles/prism.css'
+
 import React from "react";
 import { Metadata } from "next";
 // eslint-disable-next-line camelcase
