@@ -29,7 +29,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
     mongoUser = await getUserById({ userId: clerkId });
   }
 
-
   return (
     <>
       <div className=" flex w-full flex-col items-start justify-start">
@@ -100,8 +99,6 @@ const Page = async ({ params }: { params: { slug: string } }) => {
         questionId={questionId}
         userId={JSON.stringify(mongoUser._id)}
         totalAnswers={result.question.answers.length}
-
-
       />
       <Answer
         question={result.question.content}

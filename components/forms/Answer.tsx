@@ -1,6 +1,12 @@
-'use client';
+"use client";
 import React, { useRef, useState } from "react";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "../ui/form";
 import { useForm } from "react-hook-form";
 import { AnswerSchema } from "@/lib/validations";
 import { z } from "zod";
@@ -21,44 +27,39 @@ interface Props {
 
 const Answer = ({ question, questionId, authorId }: Props) => {
   const pathname = usePathname();
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const { mode } = useTheme();
   const editorRef = useRef(null);
   const form = useForm<z.infer<typeof AnswerSchema>>({
     resolver: zodResolver(AnswerSchema),
     defaultValues: {
-      answer: ''
-    }
-
-  })
+      answer: "",
+    },
+  });
 
   const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
     setIsSubmitting(true);
-
 
     try {
       await createAnswer({
         content: values.answer,
         author: JSON.parse(authorId),
         question: JSON.parse(questionId),
-        path: pathname
-
+        path: pathname,
       });
       form.reset();
 
       if (editorRef.current) {
         const editor = editorRef.current as any;
-        editor.setContent('');
+        editor.setContent("");
       }
     } catch (error) {
-
       console.log(error);
-      throw error
-
+      throw error;
     } finally {
       setIsSubmitting(false);
     }
-  }
+  };
   return (
     <div>
       <div className=" mt-6 flex flex-col justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
@@ -68,7 +69,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
 
         <Button
           className="btn light-border-2 gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none"
-          onClick={() => { }}
+          onClick={() => {}}
         >
           <Image
             src={`/assets/icons/stars.svg`}
@@ -80,7 +81,8 @@ const Answer = ({ question, questionId, authorId }: Props) => {
         </Button>
       </div>
       <Form {...form}>
-        <form className=" mt-6 flex w-full flex-col gap-10"
+        <form
+          className=" mt-6 flex w-full flex-col gap-10"
           onSubmit={form.handleSubmit(handleCreateAnswer)}
         >
           <FormField
@@ -123,15 +125,15 @@ const Answer = ({ question, questionId, authorId }: Props) => {
                         "undo redo | " +
                         "codesample | bold italic forecolor | alignleft aligncenter |" +
                         "alignright alignjustify | bullist numlist",
-                      content_style: "body { font-family:Inter; font-size:16px }",
-                      skin: mode === "dark" ? 'oxide-dark' : 'oxide',
-                      content_css: mode === 'dark' ? 'dark' : 'light',
+                      content_style:
+                        "body { font-family:Inter; font-size:16px }",
+                      skin: mode === "dark" ? "oxide-dark" : "oxide",
+                      content_css: mode === "dark" ? "dark" : "light",
                     }}
                   />
                 </FormControl>
                 <FormMessage className="text-red-500" />
               </FormItem>
-
             )}
           />
 
@@ -141,12 +143,10 @@ const Answer = ({ question, questionId, authorId }: Props) => {
               className=" primary-gradient w-fit text-white"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Submitting...' : 'Submit'}
+              {isSubmitting ? "Submitting..." : "Submit"}
             </Button>
           </div>
-
         </form>
-
       </Form>
     </div>
   );

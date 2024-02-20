@@ -17,8 +17,8 @@ export async function gettopInteractedTags(params: GetTopInteractedTagsParams) {
     //  find interaction for the user and group by tags
 
     return [
-      { _id: '1', name: "tag1" },
-      { _id: '2', name: "tag2" },
+      { _id: "1", name: "tag1" },
+      { _id: "2", name: "tag2" },
     ];
   } catch (error) {
     console.log(error);
