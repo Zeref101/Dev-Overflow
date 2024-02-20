@@ -1,9 +1,12 @@
 import Answer from "@/components/forms/Answer";
+import AllAnswers from "@/components/shared/AllAnswers";
 import Metric from "@/components/shared/Metric";
 import ParseHTML from "@/components/shared/ParseHTML";
 import RenderTag from "@/components/shared/RenderTag";
 import { getQuestionById } from "@/lib/actions/question.action";
+import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
+import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -16,7 +19,17 @@ interface QuestionTagProps {
 const Page = async ({ params }: { params: { slug: string } }) => {
   const questionId = params.slug;
   const result = await getQuestionById({ questionId });
-  // console.log(result.question);
+  console.log(result);
+
+  const { userId: clerkId } = auth();
+
+  let mongoUser;
+
+  if (clerkId) {
+    mongoUser = await getUserById({ userId: clerkId });
+  }
+
+
   return (
     <>
       <div className=" flex w-full flex-col items-start justify-start">
@@ -66,10 +79,11 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             />
           </div>
         </div>
+        <div className=" text-dark200_light900">
+          <ParseHTML data={result.question.content} />
+        </div>
       </div>
-      <div className=" text-dark200_light900">
-        <ParseHTML data={result.question.content} />
-      </div>
+
       <div className=" mt-8 flex gap-4">
         {result.question.tag.map((tag: QuestionTagProps) => {
           return (
@@ -82,7 +96,18 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           );
         })}
       </div>
-      <Answer />
+      <AllAnswers
+        questionId={questionId}
+        userId={JSON.stringify(mongoUser._id)}
+        totalAnswers={result.question.answers.length}
+
+
+      />
+      <Answer
+        question={result.question.content}
+        questionId={JSON.stringify(result.question._id)}
+        authorId={JSON.stringify(mongoUser._id)}
+      />
     </>
   );
 };
