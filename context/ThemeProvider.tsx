@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-interface ThemeContextType {
+export interface ThemeContextType {
   mode: string;
   // a function which accepts the mode as string and returns void
   // cause localstorage doesnt know what is the current active theme
