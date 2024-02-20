@@ -50,7 +50,7 @@ export async function createQuestion(params: CreateQuestionParams) {
       const existingTag = await Tag.findOneAndUpdate(
         { name: { $regex: new RegExp(`^${tag}$`, "i") } }, // This regex is used to find a tag that matches the tag variable.
         { $setOnInsert: { name: tag }, $push: { Questions: question._id } }, // If a matching tag is found, it appends the question._id to its question array, associating the question with the tag.
-        { upsert: true, new: true }, // If no matching tag is found, it creates a new tag with the name and question fields.
+        { upsert: true, new: true } // If no matching tag is found, it creates a new tag with the name and question fields.
       );
       tagDocuments.push(existingTag._id);
     }
@@ -62,7 +62,9 @@ export async function createQuestion(params: CreateQuestionParams) {
     revalidatePath(path);
     // revalidate because after asking the question it wont recall the fetch function we need to reload the site
     // revalidate allows you to specify a time interval (in seconds) after which a page or data should be revalidated (refetched from the server) to check for updates.
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function getQuestionById(params: GetQuestionByIdParams) {
