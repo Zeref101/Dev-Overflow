@@ -20,7 +20,7 @@ interface QuestionTagProps {
 const Page = async ({ params }: { params: { slug: string } }) => {
   const questionId = params.slug;
   const result = await getQuestionById({ questionId });
-  console.log(result);
+  // console.log(result);
 
   const { userId: clerkId } = auth();
 
@@ -52,7 +52,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           <div className="flex justify-end text-white">
             <Votes
               type={"question"}
-              itemId={JSON.stringify(result.question._id)}
+              questionId={JSON.stringify(result.question._id)}
               userId={JSON.stringify(mongoUser._id)}
               upvotes={result.question.upvotes.length}
               hasupVoted={result.question.upvotes.includes(mongoUser._id)}
