@@ -4,22 +4,23 @@ import Image from "next/image";
 import { formatAndDivideNumber } from "@/lib/utils";
 import { downvoteUpdate, upvoteQuestion } from "@/lib/actions/question.action";
 import { usePathname } from "next/navigation";
+import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
 // import { useRouter } from "next/router";
 
 interface Props {
   type: string;
-  questionId: string;
+  itemId: string;
   userId: string;
   upvotes: number;
   hasupVoted: boolean;
   downvotes: number;
   hasdownVoted: boolean;
-  hasSaved: boolean;
+  hasSaved?: boolean;
 }
 
 const Votes = ({
   type,
-  questionId,
+  itemId,
   userId,
   upvotes,
   hasupVoted,
@@ -43,39 +44,39 @@ const Votes = ({
     if (action === "upvote") {
       if (type === "question") {
         await upvoteQuestion({
-          questionId: JSON.parse(questionId),
+          questionId: JSON.parse(itemId),
           userId: JSON.parse(userId),
           hasupVoted,
           hasdownVoted,
           path: pathname,
         });
       } else if (type === "answer") {
-        // await upvoteAnswer({
-        //   questionId: JSON.parse(questionId),
-        //   userId: JSON.parse(userId),
-        //   hasupVoted,
-        //   hasdownVoted,
-        //   path: pathname,
-        // })
+        await upvoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
       }
       // show a success or failure toast
     } else if (action === "downvote") {
       if (type === "question") {
         await downvoteUpdate({
-          questionId: JSON.parse(questionId),
+          questionId: JSON.parse(itemId),
           userId: JSON.parse(userId),
           hasupVoted,
           hasdownVoted,
           path: pathname,
         });
       } else if (type === "answer") {
-        // await upvoteAnswer({
-        //   questionId: JSON.parse(questionId),
-        //   userId: JSON.parse(userId),
-        //   hasupVoted,
-        //   hasdownVoted,
-        //   path: pathname,
-        // })
+        await downvoteAnswer({
+          answerId: JSON.parse(itemId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
       }
       // show a success or failure toast
     }
