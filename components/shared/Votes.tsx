@@ -2,10 +2,13 @@
 import React from "react";
 import Image from "next/image";
 import { formatAndDivideNumber } from "@/lib/utils";
+import { downvoteUpdate, upvoteQuestion } from "@/lib/actions/question.action";
+import { usePathname } from "next/navigation";
+// import { useRouter } from "next/router";
 
 interface Props {
   type: string;
-  itemId: string;
+  questionId: string;
   userId: string;
   upvotes: number;
   hasupVoted: boolean;
@@ -16,7 +19,7 @@ interface Props {
 
 const Votes = ({
   type,
-  itemId,
+  questionId,
   userId,
   upvotes,
   hasupVoted,
@@ -24,11 +27,59 @@ const Votes = ({
   hasdownVoted,
   hasSaved,
 }: Props) => {
+  const pathname = usePathname();
+  // const router = useRouter();
   // const handleSaved = () => {
 
   // }
 
-  const handleVote = (action: string) => {};
+  const handleVote = async (action: string) => {
+    console.log(action, type);
+    if (!userId) {
+      // eslint-disable-next-line no-useless-return
+      return;
+    }
+
+    if (action === "upvote") {
+      if (type === "question") {
+        await upvoteQuestion({
+          questionId: JSON.parse(questionId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
+      } else if (type === "answer") {
+        // await upvoteAnswer({
+        //   questionId: JSON.parse(questionId),
+        //   userId: JSON.parse(userId),
+        //   hasupVoted,
+        //   hasdownVoted,
+        //   path: pathname,
+        // })
+      }
+      // show a success or failure toast
+    } else if (action === "downvote") {
+      if (type === "question") {
+        await downvoteUpdate({
+          questionId: JSON.parse(questionId),
+          userId: JSON.parse(userId),
+          hasupVoted,
+          hasdownVoted,
+          path: pathname,
+        });
+      } else if (type === "answer") {
+        // await upvoteAnswer({
+        //   questionId: JSON.parse(questionId),
+        //   userId: JSON.parse(userId),
+        //   hasupVoted,
+        //   hasdownVoted,
+        //   path: pathname,
+        // })
+      }
+      // show a success or failure toast
+    }
+  };
   return (
     <div className="flex gap-5">
       <div className="flex-center gap-2.5">
@@ -64,7 +115,9 @@ const Votes = ({
             height={18}
             alt="downvote"
             className="cursor-pointer"
-            onClick={() => {}}
+            onClick={() => {
+              handleVote("downvote");
+            }}
           />
 
           <div className="flex-center background-light700_dark400 min-w-[18px] rounded-sm p-1">
