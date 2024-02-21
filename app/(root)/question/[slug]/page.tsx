@@ -52,7 +52,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           <div className="flex justify-end text-white">
             <Votes
               type={"question"}
-              questionId={JSON.stringify(result.question._id)}
+              itemId={JSON.stringify(result.question._id)}
               userId={JSON.stringify(mongoUser._id)}
               upvotes={result.question.upvotes.length}
               hasupVoted={result.question.upvotes.includes(mongoUser._id)}
@@ -90,7 +90,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
             />
           </div>
         </div>
-        <div className=" text-dark200_light900">
+        <div className=" text-dark200_light900 w-full">
           <ParseHTML data={result.question.content} />
         </div>
       </div>
@@ -109,7 +109,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
       </div>
       <AllAnswers
         questionId={questionId}
-        userId={JSON.stringify(mongoUser._id)}
+        userId={mongoUser._id}
         totalAnswers={result.question.answers.length}
       />
       <Answer
