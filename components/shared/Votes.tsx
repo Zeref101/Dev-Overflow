@@ -5,6 +5,7 @@ import { formatAndDivideNumber } from "@/lib/utils";
 import { downvoteUpdate, upvoteQuestion } from "@/lib/actions/question.action";
 import { usePathname } from "next/navigation";
 import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
+import { saveQuestions } from "@/lib/actions/user.action";
 // import { useRouter } from "next/router";
 
 interface Props {
@@ -30,9 +31,19 @@ const Votes = ({
 }: Props) => {
   const pathname = usePathname();
   // const router = useRouter();
-  // const handleSaved = () => {
+  const handleSaved = async () => {
+    console.log(itemId, userId);
+    const savedQuestionResponse = await saveQuestions({
+      questionId: JSON.parse(itemId),
+      userId: JSON.parse(userId),
+      path: pathname
+    }
+    );
 
-  // }
+    if (!savedQuestionResponse) {
+      console.log("Error while saving");
+    }
+  }
 
   const handleVote = async (action: string) => {
     console.log(action, type);
@@ -140,7 +151,7 @@ const Votes = ({
           height={18}
           alt="star"
           className="cursor-pointer"
-          onClick={() => handleVote("downvote")}
+          onClick={() => handleSaved()}
         />
       )}
     </div>
