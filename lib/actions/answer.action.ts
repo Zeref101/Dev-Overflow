@@ -80,7 +80,7 @@ export async function upvoteAnswer(params: AnswerVoteParams) {
     const updatedAnswer = await Answer.findByIdAndUpdate(
       answerId,
       updateQuery,
-      { new: true },
+      { new: true }
     );
 
     if (!updatedAnswer) {
@@ -115,7 +115,7 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
     const updatedAnswer = await Answer.findByIdAndUpdate(
       answerId,
       updateQuery,
-      { new: true },
+      { new: true }
     );
 
     if (!updatedAnswer) {
