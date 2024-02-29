@@ -4,12 +4,13 @@ import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { HomePageFilters } from "@/constants/filter";
-// import { getQuestions } from "@/lib/actions/question.action";
 import { getSavedQuestions, getUserById } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
 import Link from "next/link";
 
+
 const Page = async () => {
+
     const userId = auth();
     const mongouserId = await getUserById(userId);
 
