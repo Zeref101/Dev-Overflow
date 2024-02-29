@@ -29,20 +29,19 @@ const Votes = ({
   hasdownVoted,
   hasSaved,
 }: Props) => {
+
   const pathname = usePathname();
   // const router = useRouter();
   const handleSaved = async () => {
-    console.log(itemId, userId);
+
+    // eslint-disable-next-line no-unused-vars
     const savedQuestionResponse = await saveQuestions({
       questionId: JSON.parse(itemId),
       userId: JSON.parse(userId),
-      path: pathname
-    }
-    );
+      path: pathname,
+      hasSaved: hasSaved as boolean | undefined
+    });
 
-    if (!savedQuestionResponse) {
-      console.log("Error while saving");
-    }
   }
 
   const handleVote = async (action: string) => {
