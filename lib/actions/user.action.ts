@@ -107,7 +107,19 @@ export async function saveQuestions(params: ToggleSaveQuestionParams) {
   try {
     connectionToDatabase();
 
-    const { userId, questionId, path } = params;
+    const { userId, questionId, path, hasSaved } = params;
+
+    if (hasSaved) {
+      const savedQuestionResponse = await User.findByIdAndUpdate(
+        userId,
+        {
+          $pull: { saved: questionId },
+        },
+        { new: true }
+      );
+      revalidatePath(path);
+      return savedQuestionResponse;
+    }
 
     const savedQuestionResponse = await User.findByIdAndUpdate(
       userId,
@@ -135,9 +147,7 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
     connectionToDatabase();
 
     const { clerkId, searchQuery, page, pageSize, filter } = params;
-    console.log("Clerrrkkkrkkrrk", clerkId);
 
-    // const projection = { saved: 1 };
     const query: FilterQuery<typeof Question> = searchQuery
       ? { title: { $regex: new RegExp(searchQuery, "i") } }
       : {};
