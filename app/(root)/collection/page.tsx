@@ -13,8 +13,6 @@ const Page = async () => {
 
     const userId = auth();
     const mongouserId = await getUserById(userId);
-
-
     const saved = await getSavedQuestions({ clerkId: mongouserId.clerkId });
 
     return (

@@ -45,7 +45,7 @@ const Votes = ({
   }
 
   const handleVote = async (action: string) => {
-    console.log(action, type);
+
     if (!userId) {
       // eslint-disable-next-line no-useless-return
       return;

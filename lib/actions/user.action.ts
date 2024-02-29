@@ -148,6 +148,8 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
 
     const { clerkId, searchQuery, page, pageSize, filter } = params;
 
+    console.log(page, pageSize, filter);
+
     const query: FilterQuery<typeof Question> = searchQuery
       ? { title: { $regex: new RegExp(searchQuery, "i") } }
       : {};
