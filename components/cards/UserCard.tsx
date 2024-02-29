@@ -31,7 +31,9 @@ const UserCard = async ({ user }: Prop) => {
           className=" light-border h-[100px] w-[100px] rounded-full border object-cover"
         />
         <div className=" mt-4 text-center">
-          <h3 className="h3-bold text-dark200_light900 line-clamp-1">{user.name}</h3>
+          <h3 className="h3-bold text-dark200_light900 line-clamp-1">
+            {user.name}
+          </h3>
           <p className=" body-regular text-dark500_light500 mt-2 line-clamp-1">
             @{user.username}
           </p>

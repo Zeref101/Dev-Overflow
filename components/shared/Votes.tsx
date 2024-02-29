@@ -29,23 +29,19 @@ const Votes = ({
   hasdownVoted,
   hasSaved,
 }: Props) => {
-
   const pathname = usePathname();
   // const router = useRouter();
   const handleSaved = async () => {
-
     // eslint-disable-next-line no-unused-vars
     const savedQuestionResponse = await saveQuestions({
       questionId: JSON.parse(itemId),
       userId: JSON.parse(userId),
       path: pathname,
-      hasSaved: hasSaved as boolean | undefined
+      hasSaved: hasSaved as boolean | undefined,
     });
-
-  }
+  };
 
   const handleVote = async (action: string) => {
-
     if (!userId) {
       // eslint-disable-next-line no-useless-return
       return;

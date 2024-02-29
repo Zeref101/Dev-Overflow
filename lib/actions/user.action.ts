@@ -115,7 +115,7 @@ export async function saveQuestions(params: ToggleSaveQuestionParams) {
         {
           $pull: { saved: questionId },
         },
-        { new: true }
+        { new: true },
       );
       revalidatePath(path);
       return savedQuestionResponse;
@@ -126,7 +126,7 @@ export async function saveQuestions(params: ToggleSaveQuestionParams) {
       {
         $push: { saved: questionId },
       },
-      { new: true }
+      { new: true },
     );
 
     if (!savedQuestionResponse) {
